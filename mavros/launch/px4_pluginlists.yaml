@@ -1,0 +1,14 @@
+plugin_blacklist:
+# common
+- safety_area
+#- setpoint_position 
+- setpoint_attitude 
+- setpoint_accel 
+
+# extras
+- image_pub
+- vibration
+- distance_sensor
+
+plugin_whitelist: []
+#- 'sys_*'
