@@ -71,6 +71,7 @@ add_library(mavros_extras
   src/plugins/image_pub.cpp
   src/plugins/mocap_pose_estimate.cpp
   src/plugins/vision_pose_estimate.cpp
+  src/plugins/vicon_pose_estimate.cpp
   src/plugins/vision_speed_estimate.cpp
   src/plugins/vibration.cpp
   src/plugins/cam_imu_sync.cpp
