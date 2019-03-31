@@ -63,7 +63,7 @@ public:
 		else {
 			vision_sub = sp_nh.subscribe("pose", 10, &VisionPoseEstimatePlugin::vision_cb, this);
 			vision_cov_sub = sp_nh.subscribe("pose_cov", 10, &VisionPoseEstimatePlugin::vision_cov_cb, this);
-			odom_sub = sp_nh.subscribe("/zed/odom", 2, &VisionPoseEstimatePlugin::odom_cb, this);
+			odom_sub = sp_nh.subscribe("/mocap/delete_this/pose", 2, &VisionPoseEstimatePlugin::odom_cb, this);
 		}
 	}
 
@@ -156,11 +156,11 @@ private:
 		send_vision_estimate(req->header.stamp, tr);
 	}
 	
-	void odom_cb(const nav_msgs::Odometry &msg) {
+	void odom_cb(const geometry_msgs::PoseStamped &msg) {
 		
 		geometry_msgs::PoseStamped  pos;
 		pos.header = msg.header;
-		pos.pose = msg.pose.pose;
+		pos.pose = msg.pose;
 		
 		if(init) //chg
 		{
@@ -192,7 +192,7 @@ private:
 		Eigen::Affine3d tr;
 		tf::poseMsgToEigen(req.pose, tr);
 		
-		//ROS_INFO("%ld",req.header.stamp.nsec);
+		ROS_INFO("%ld",req.header.stamp.nsec);
 
 		send_vision_estimate(req.header.stamp, tr);
 	}

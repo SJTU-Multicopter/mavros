@@ -2,7 +2,7 @@
 	<!-- vim: set ft=xml noet : -->
 	<!-- example launch script for PX4 based FCU's -->
 
-	<arg name="fcu_url" default="/dev/Pixhawk:921600" />
+	<arg name="fcu_url" default="/dev/pixhawk:921600" />
 	<arg name="gcs_url" default="" />
 	<arg name="tgt_system" default="1" />
 	<arg name="tgt_component" default="1" />
@@ -18,9 +18,4 @@
 		<arg name="tgt_component" value="$(arg tgt_component)" />
 		<arg name="log_output" value="$(arg log_output)" />
 	</include>
-	
-	<node pkg="lidar_driver" name="tf01_node" type="tf01_node" output="screen">
-		<param name="device" type="string" value="/dev/Lidar"/>
-	</node> 
-	<node pkg="stereo_camera" name="odom_transformer" type="odom_transformer" output="screen"/>
 </launch>

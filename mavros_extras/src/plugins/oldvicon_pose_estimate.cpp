@@ -41,7 +41,6 @@ public:
 		init(true)
 	{ };
 
-
 	void initialize(UAS &uas_)
 	{
 		bool tf_listen;
@@ -55,7 +54,6 @@ public:
 		sp_nh.param("tf/rate_limit", tf_rate, 50.0);
 
         vicon_sub = sp_nh.subscribe("/mocap/pose", 2, &ViconPoseEstimatePlugin::vicon_cb, this);
-
 	}
 
 	const message_map get_rx_handlers() {
@@ -102,9 +100,15 @@ private:
 
         // pos.header.stamp = ros::Time::now(); //use ros time
 
+        Eigen::Affine3d tr;
+		tf::poseMsgToEigen(pos.pose, tr);
+
+		// auto position = Eigen::Vector3d(tr.translation());
+		auto rpy = UAS::quaternion_to_rpy(Eigen::Quaterniond(tr.rotation()));
+
         vicon_position_estimate(pos.header.stamp.toNSec() / 1000,
-                pos.pose.position.x, -pos.pose.position.y, -pos.pose.position.z,
-                pos.pose.orientation.x, -pos.pose.orientation.y, -pos.pose.orientation.z);
+                pos.pose.position.x, pos.pose.position.y, pos.pose.position.z,
+                rpy.x(), rpy.y(), rpy.z());
 
 //        vicon_position_estimate(pos.header.stamp.toNSec() / 1000,
 //                -pos.pose.position.y, pos.pose.position.x, -pos.pose.position.z,
